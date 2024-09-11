@@ -1,10 +1,8 @@
 package com.wellsfargo.counselor.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,6 +11,9 @@ public class Security {
     @Id
     @GeneratedValue
     private long securityId;
+
+    @ManyToOne
+    private Portfolio portfolio;
 
     @Column(nullable = false)
     private String name;
@@ -33,7 +34,8 @@ public class Security {
 
     }
 
-    public Security(String name, String category, float purchasePrice, LocalDateTime purchaseDate, long quantity) {
+    public Security(Portfolio portfolio, String name, String category, float purchasePrice, LocalDateTime purchaseDate, long quantity) {
+        this.portfolio = portfolio;
         this.name = name;
         this.category = category;
         this.purchasePrice = purchasePrice;
@@ -42,6 +44,10 @@ public class Security {
     }
 
     public long getSecurityId() { return securityId; }
+
+    public Portfolio getPortfolio() { return portfolio; }
+
+    public void setPortfolio(Portfolio portfolio) { this.portfolio = portfolio; }
 
     public String getName() { return name; }
 
